@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>
+        <%=title%> | Bongthoi.com
+    </title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <script src="/assets/bootstrap/js/jquery.min.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>    
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <script>
+    var socket=io("http://localhost:3000");
+
+    socket.on("server-send-data",function(data){
+        $("#data").append(data+",");
+    });
+
+    $(document).ready(function(){
+        $("#me_to_me").click(function(){
+            socket.emit("client-send-data","me_to_me");
+        });
+
+        $("#me_to_all").click(function(){
+            socket.emit("client-send-data","me_to_all");
+        });
+
+        $("#me_to_other").click(function(){
+            socket.emit("client-send-data","me_to_other");
+        });
+
+        $("#me_to_other_one").click(function(){
+            //socket.emit("client-send-data","me_to_other_one");
+        });
+    });
+    </script>
+</head>
+<body>
+<h1>Wellcome to socketio esproject.</h1>
+
+
+
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th><div id="me_to_me">me_to_me</div></th>
+        <th><div id="me_to_all">me_to_all</div></th>
+        <th><div id="me_to_other">me_to_other</div></th>
+        <th><div id="me_to_other_one">me_to_other_one</div></th>        
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="4"><div id="data"></div></td>
+      </tr>      
+    </tbody>
+  </table>
+</body>
+</html>
